@@ -1,0 +1,76 @@
+[gd_scene load_steps=11 format=3 uid="uid://ryhhlskm028"]
+
+[ext_resource type="PackedScene" uid="uid://rurdfjay2m3c" path="res://guy.glb" id="1_noe7m"]
+[ext_resource type="Script" path="res://guy.gd" id="2_sjbd6"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l5e02"]
+radius = 0.185926
+height = 1.68595
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bub8b"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ige7e"]
+animation = &"walk"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bhvcb"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_1881p"]
+advance_mode = 2
+advance_condition = &"is_moving"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_guam5"]
+advance_mode = 2
+advance_condition = &"idle"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_un0qw"]
+states/Start/position = Vector2(201, 100.125)
+states/idle/node = SubResource("AnimationNodeAnimation_bub8b")
+states/idle/position = Vector2(376, 89.17)
+states/walk/node = SubResource("AnimationNodeAnimation_ige7e")
+states/walk/position = Vector2(602.5, 89.045)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_bhvcb"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_1881p"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_guam5")]
+graph_offset = Vector2(57.9299, -34.4701)
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_xs7ve"]
+graph_offset = Vector2(-291.246, 142.441)
+nodes/StateMachine/node = SubResource("AnimationNodeStateMachine_un0qw")
+nodes/StateMachine/position = Vector2(50, 220)
+nodes/output/position = Vector2(300, 200)
+node_connections = [&"output", 0, &"StateMachine"]
+
+[node name="guy" instance=ExtResource("1_noe7m")]
+script = ExtResource("2_sjbd6")
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+bones/0/position = Vector3(0.00044977, 0.947815, 0.00749206)
+bones/2/rotation = Quaternion(0.770003, 0.151975, -0.600438, 0.15321)
+bones/3/rotation = Quaternion(0.0836384, 0.0309478, 0.134159, 0.986939)
+bones/4/rotation = Quaternion(0.901776, 0.0338462, -0.430877, 3.4635e-05)
+bones/4/scale = Vector3(1.00003, 1, 1.00002)
+bones/5/rotation = Quaternion(0.00244677, -0.042429, -0.0026092, 0.999093)
+bones/5/scale = Vector3(0.999997, 1, 1)
+bones/6/rotation = Quaternion(-0.338568, -0.063551, 0.592126, 0.728505)
+bones/6/scale = Vector3(1.00001, 0.999975, 1.00003)
+bones/7/rotation = Quaternion(0.77761, -0.12921, 0.5926, 0.165687)
+bones/8/rotation = Quaternion(0.0131557, 0.000274634, -0.15149, 0.988371)
+bones/9/rotation = Quaternion(0.908388, -0.0152344, 0.407674, 0.0916581)
+bones/9/scale = Vector3(1.00003, 1, 1.00003)
+bones/10/rotation = Quaternion(0.146106, 0.0400975, 0.158125, 0.975726)
+bones/11/rotation = Quaternion(-0.376827, 0.0569416, -0.673984, 0.632855)
+bones/11/scale = Vector3(1.00001, 0.999973, 1.00004)
+bones/12/position = Vector3(0.214605, 0.491751, 0.312441)
+bones/13/position = Vector3(0.195716, 0.0046823, -0.022854)
+bones/14/position = Vector3(-0.205931, 0.491751, 0.309694)
+bones/15/position = Vector3(-0.209184, 0.0287793, -0.0626945)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="2"]
+transform = Transform3D(0.952028, 0, -0.306011, 0, 1, 0, 0.306011, 0, 0.952028, 0, 0.80574, 0)
+shape = SubResource("CapsuleShape3D_l5e02")
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="3"]
+tree_root = SubResource("AnimationNodeBlendTree_xs7ve")
+anim_player = NodePath("../AnimationPlayer")
+parameters/StateMachine/conditions/idle = false
+parameters/StateMachine/conditions/is_moving = false

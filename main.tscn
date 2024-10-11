@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://dq1vtxpgeq0t2"]
+
+[ext_resource type="PackedScene" uid="uid://ryhhlskm028" path="res://guy.tscn" id="1_ej7kf"]
+
+[node name="Node" type="Node"]
+
+[node name="guy" parent="." instance=ExtResource("1_ej7kf")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.101437, 0.661579, 3.29945)
+fov = 43.255
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.792822, 0, 0.609453, -0.40991, 0.740019, 0.533241, -0.451007, -0.672586, 0.586703, 4.83899, 4.21216, 4.33149)
